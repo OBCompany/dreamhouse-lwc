@@ -1,4 +1,4 @@
- name: Restrict Merge to DevOps
+ name: Restrict Merge to DevOps 2
  on:
    pull_request:
      branches:
@@ -12,7 +12,7 @@
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
          run: |
            TEAM_MEMBERS=$(curl -H "Authorization: token $GITHUB_TOKEN" \
-           https://api.github.com/orgs/OBCompany/teams/DevOps/members | jq -r '.[].login')
+           https://api.github.com/orgs/DevOps/teams/devops/members | jq -r 'map(.login) | join(" ")')
            if [[ ! " $TEAM_MEMBERS " =~ " ${{ github.actor }} " ]]; then
              echo "Error: Only DevOps team members can merge to main"
              exit 1
