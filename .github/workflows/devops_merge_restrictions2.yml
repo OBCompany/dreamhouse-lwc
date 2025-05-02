@@ -1,4 +1,4 @@
- name: Restrict Merge to DevOps 2
+ name: Restrict Merge to DevOps
  on:
    pull_request:
      branches:
