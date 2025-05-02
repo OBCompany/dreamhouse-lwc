@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Check DevOps team
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Use the PAT instead of the default token
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }} # Use the PAT instead of the default token
         run: |
           TEAM_MEMBERS=$(curl -H "Authorization: token $GITHUB_TOKEN" \
           https://api.github.com/orgs/OBCompany/teams/DevOps/members)
