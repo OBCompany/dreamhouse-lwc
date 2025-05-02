@@ -1,0 +1,15 @@
+name: DevOps Merge Restriction
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  check-devops:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check DevOps team
+        run: |
+          if [[ "${{ github.actor }}" != "DevOps" ]]; then
+            echo "Error: Only DevOps team members can merge to main"
+            exit 1
+          fi
