@@ -4,7 +4,6 @@ public with sharing class FileUtilities {
         String base64data,
         String filename,
         String recordId
-//test
     ) {
         try {
             ContentVersion contentVersion = new ContentVersion();
