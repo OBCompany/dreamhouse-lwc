@@ -1,0 +1,17 @@
+ name: Restrict Merge to DevOps
+ on:
+   pull_request:
+     branches:
+       - main
+ jobs:
+   check-devops:
+     runs-on: ubuntu-latest
+     steps:
+       - name: Check DevOps team
+         run: |
+           TEAM_MEMBERS=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+           https://api.github.com/orgs/YOUR_ORG/teams/devops/members | jq -r '.[].login')
+           if [[ ! " $TEAM_MEMBERS " =~ " ${{ github.actor }} " ]]; then
+             echo "Error: Only DevOps team members can merge to main"
+             exit 1
+           fi
