@@ -12,19 +12,19 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
           # Fetch team members
+          # Fetch team members
           RESPONSE=$(curl -H "Authorization: token $GITHUB_TOKEN" \
           https://api.github.com/orgs/OBCompany/teams/DevOps/members)
           
-          echo "API Response: $RESPONSE" # Debugging step
+          # Extract team members' logins into an array
+          TEAM_MEMBERS=($(echo "$RESPONSE" | jq -r '.[].login'))
           
-          # Extract team members' logins
-          TEAM_MEMBERS=$(echo "$RESPONSE" | jq -r '.[].login')
-
-          echo "Team Members: $TEAM_MEMBERS"
+          # Debugging: Print team members
+          echo "Team Members: ${TEAM_MEMBERS[@]}"
           echo "Current Actor: ${{ github.actor }}"
-
+          
           # Check if the actor is part of the team
-          if [[ ! " $TEAM_MEMBERS " =~ " ${{ github.actor }} " ]]; then
+          if [[ ! " ${TEAM_MEMBERS[@]} " =~ " ${{ github.actor }} " ]]; then
             echo "Error: Only DevOps team members can merge to main"
             exit 1
           fi
