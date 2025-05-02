@@ -12,8 +12,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }} # Use the PAT instead of the default token
         run: |
           TEAM_MEMBERS=$(curl -H "Authorization: token $GITHUB_TOKEN" \
-          https://api.github.com/orgs/OBCompany/teams/DevOps/members)
+          https://api.github.com/orgs/OBCompany/teams/DevOps/members | jq -r '.[].login')
+
           echo "Team Members: $TEAM_MEMBERS"
+
           if [[ ! " $TEAM_MEMBERS " =~ " ${{ github.actor }} " ]]; then
             echo "Error: Only DevOps team members can merge to main"
             exit 1
