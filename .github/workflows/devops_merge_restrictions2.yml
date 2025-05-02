@@ -13,7 +13,7 @@
          run: |
            
            TEAM_MEMBERS=$(curl -H "Authorization: token $GITHUB_TOKEN" \
-           https://api.github.com/orgs/DevOps/teams/devops/members
+           https://api.github.com/orgs/DevOps/teams/devops/members)
            echo "Team Members: $TEAM_MEMBERS"
            if [[ ! " $TEAM_MEMBERS " =~ " ${{ github.actor }} " ]]; then
              echo "Error: Only DevOps team members can merge to main"
