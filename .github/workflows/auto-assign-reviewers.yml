@@ -18,7 +18,7 @@ jobs:
       - uses: actions/github-script@v7
         with:
           script: |
-            const reviewers = ['onkarbhujbal']; // GitHub usernames
+            const reviewers = ['onkarbhujbal2556']; // GitHub usernames
             // For org teams, use team_reviewers with slugs: ['devops-team']
             await github.rest.pulls.requestReviewers({
               owner: context.repo.owner,
