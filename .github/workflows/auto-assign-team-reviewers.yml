@@ -1,0 +1,29 @@
+
+name: Auto-assign team reviewers
+
+on:
+  pull_request:
+    types: [opened, ready_for_review, reopened]
+    # branches: [main, develop] # optional
+
+permissions:
+  pull-requests: write
+
+jobs:
+  add-team-reviewers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+
+            // IMPORTANT: use team slugs (lowercase, hyphenated)
+            const team_reviewers = ['devops'];
+
+            await github.rest.pulls.requestReviewers({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+              team_reviewers
+            });
