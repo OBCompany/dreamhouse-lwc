@@ -24,5 +24,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number,
-              reviewers,team_reviewers: ['DevOps']
+              reviewers,team_reviewers: ['devops']
             });
