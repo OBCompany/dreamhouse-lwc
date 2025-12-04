@@ -1,4 +1,5 @@
 # Default owners for everything in the repo.
 # They will be assigned for review on all PRs.
-* @trailheadapps/maintainers-dreamhouse-lwc
+# Entire repo goes to DevOps team
+* @OBCompany/devops
 #ECCN:Open Source

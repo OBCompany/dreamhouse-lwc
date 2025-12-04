@@ -1,0 +1,29 @@
+
+name: Auto-assign reviewers
+
+on:
+  pull_request:
+    types: [opened, ready_for_review, reopened]
+    # Optionally restrict to branches
+    # branches: [main, develop]
+
+# Required so the workflow can modify PRs
+permissions:
+  pull-requests: write
+
+jobs:
+  add-reviewers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const reviewers = ['onkarbhujbal2556']; // GitHub usernames
+            // For org teams, use team_reviewers with slugs: ['devops-team']
+            await github.rest.pulls.requestReviewers({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              reviewers
+              //team_reviewers: ['devops']
+            });
