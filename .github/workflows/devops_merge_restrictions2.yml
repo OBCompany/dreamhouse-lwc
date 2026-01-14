@@ -1,17 +1,30 @@
- name: Restrict Merge to DevOps2
- on:
-   pull_request:
-     branches:
-       - main
- jobs:
-   check-devops:
-     runs-on: ubuntu-latest
-     steps:
-       - name: Check DevOps team
-         run: |
-           TEAM_MEMBERS=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-           https://api.github.com/orgs/OBCompany/teams/DevOps/members | jq -r '.[].login')
-           if [[ ! " $TEAM_MEMBERS " =~ " ${{ github.actor }} " ]]; then
-             echo "Error: Only DevOps team members can merge to main"
-             exit 1
-           fi
+name: Restrict Merge to DevOps 2
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  check-devops:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check DevOps team
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        run: |
+          # Fetch team members
+          # Fetch team members
+          RESPONSE=$(curl -H "Authorization: token $GITHUB_TOKEN" \
+          https://api.github.com/orgs/OBCompany/teams/DevOps1/members)
+          
+          # Extract team members' logins into an array
+          TEAM_MEMBERS=($(echo "$RESPONSE" | jq -r '.[].login'))
+          
+          # Debugging: Print team members
+          echo "Team Members: ${TEAM_MEMBERS[@]}"
+          echo "Current Actor: ${{ github.actor }}"
+          
+          # Check if the actor is part of the team
+          if [[ ! " ${TEAM_MEMBERS[@]} " =~ " ${{ github.actor }} " ]]; then
+            echo "Error: Only DevOps team members can merge to main"
+            exit 1
+          fi
