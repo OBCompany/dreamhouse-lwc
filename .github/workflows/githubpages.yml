@@ -37,9 +37,6 @@ jobs:
         with:
           name: pmd-report
           path: ./results.html
-     
-      - name: Run Tests
-        run: <run the tests with code coverage>
 
       - name: Upload Artifact
         if: github.ref == 'refs/heads/main'
