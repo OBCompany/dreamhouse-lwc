@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # location of the coverage artifacts
-          path: ./results.html
+          path: ./
 
   deploy-coverage:
     if: github.ref == 'refs/heads/main'
